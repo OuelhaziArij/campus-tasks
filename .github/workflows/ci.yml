@@ -1,4 +1,6 @@
+
 name: CI
+
 on:
   pull_request:
   push:
@@ -40,6 +42,7 @@ jobs:
           context: .
           push: false
           tags: campus-tasks:ci
+
       - name: Connexion au registre
         if: github.ref_type == 'tag'
         uses: docker/login-action@v3
@@ -47,9 +50,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Propriétaire en minuscules
         if: github.ref_type == 'tag'
-        run: echo "OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
+        run: echo "OWNER=ouelhaziarij" >> "$GITHUB_ENV"
+
       - name: Publier l'image versionnée
         if: github.ref_type == 'tag'
         uses: docker/build-push-action@v6
